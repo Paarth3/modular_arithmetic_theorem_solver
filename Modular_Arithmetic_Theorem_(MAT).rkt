@@ -32,11 +32,13 @@
 ;; primary-solutions: Int Int Nat -> (listof Nat)
 (define (primary-solutions a c m)
   (cond
-    [(zero? (simplify a m)) "The value of a cannot be zero/multiple of the modulus"]
+    [(or (= a m) (zero? (simplify a m)))
+     (cond
+       [(zero? (remainder c m)) (mk-sol-list 0 (gcd a m) m 0)]
+       [else "No real solutions exist"])]
     [(not (zero? (remainder c (gcd a m)))) "No real solutions exist"]
     [(> a m) (mk-sol-list (simplify (* (get-particular 1 0 a 0 0 1 m 0) (/ c (gcd a m))) m) (gcd a m) m 0)]
-    [(< a m) (mk-sol-list (simplify (* (get-particular 0 1 m 0 1 0 a 0) (/ c (gcd a m))) m) (gcd a m) m 0)]
-    [(= a m) "Wait for the code"]))
+    [(< a m) (mk-sol-list (simplify (* (get-particular 0 1 m 0 1 0 a 0) (/ c (gcd a m))) m) (gcd a m) m 0)]))
 
 ;; Simplifies each element of the consumed list to its congruence class of the given mod
 ;; finalize: (anyof Str (listof Int)) Nat -> (anyof Str (listof Int))
