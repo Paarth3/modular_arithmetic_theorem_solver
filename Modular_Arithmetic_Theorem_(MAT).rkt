@@ -51,7 +51,7 @@
 ;; mat: Int Int Nat -> (listof Nat)
 (define (mat a c m) (finalize (primary-solutions a c m) m))
 
-
+;; Author: Paarth Pasari
 
 
 
